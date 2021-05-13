@@ -9,7 +9,6 @@ from pyrogram.methods.messages.download_media import DEFAULT_DOWNLOAD_DIR
 from pyrogram.types import Message
 from pytgcalls import GroupCall
 
-
 class MusicPlayer(object):
     def __init__(self):
         self.group_call = GroupCall(None, path_to_log_file='')
