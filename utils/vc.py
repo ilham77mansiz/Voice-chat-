@@ -1,8 +1,20 @@
-
+tgvc-userbot, Telegram Voice Chat Userbot
+Copyright (C) 2021  Dash Eclipse
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import os
 from datetime import datetime
 
+# noinspection PyPackageRequirements
 import ffmpeg
 from pyrogram import emoji
 from pyrogram.methods.messages.download_media import DEFAULT_DOWNLOAD_DIR
@@ -27,7 +39,7 @@ class MusicPlayer(object):
     async def send_playlist(self):
         playlist = self.playlist
         if not playlist:
-            pl = f"{emoji.NO_ENTRY} empty playlist"
+            pl = f"{emoji.NO_ENTRY} playlist kosong"
         else:
             if len(playlist) == 1:
                 pl = f"{emoji.REPEAT_SINGLE_BUTTON} **Playlist**:\n"
@@ -58,7 +70,7 @@ class MusicPlayer(object):
         await self.update_start_time()
         # remove old track from playlist
         old_track = playlist.pop(0)
-        print(f"- START PLAYING: {playlist[0].audio.title}")
+        print(f"- Memulai Lagu: {playlist[0].audio.title}")
         await self.send_playlist()
         os.remove(os.path.join(
             download_dir,
@@ -107,9 +119,9 @@ mp = MusicPlayer()
 async def network_status_changed_handler(gc: GroupCall, is_connected: bool):
     if is_connected:
         mp.chat_id = int("-100" + str(gc.full_chat.id))
-        await mp.send_text(f"{emoji.CHECK_MARK_BUTTON} joined the voice chat")
+        await mp.send_text(f"{emoji.CHECK_MARK_BUTTON} Bergabung ke Voice Chat!")
     else:
-        await mp.send_text(f"{emoji.CROSS_MARK_BUTTON} left the voice chat")
+        await mp.send_text(f"{emoji.CROSS_MARK_BUTTON} Keluar dari Voice Chat!")
         mp.chat_id = None
 
 
